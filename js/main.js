@@ -1,45 +1,38 @@
 $(document).ready(function() {
 //$("#srch").focus();
-  var api = 'http://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=&generator=search&&gsrlimit=10&gsrsearch=';
-  var cb = '&callback=';
+  var api = 'http://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=&generator=search&&gsrlimit=5&gsrsearch=';
+  var cb = '&callback=?';
 
   $("#randomButton").click(function(){
-
     $(".results").html('<object data="https://en.wikipedia.org/wiki/Special:Random"/>');
-
-
   });
 
-  $("#iform").submit(function(e) {
+
+  $("form").submit(function(e) {
     e.preventDefault();
-    //$(".results").empty();
-    var input = $("#srch").val();
+    $(".results").empty();
+    var input = $("#wikiSearch").val();
 
     $.ajax({
-      type: "POST",
+      type: "GET",
       url: api + input + cb,
-      dataType: 'jsonp',
+      dataType: 'json',
       headers: {
         'Api-User-Agent': "wikiSearch"
       },
-      contentType: "application/json",
+      contentType: "application/json; charset=utf-8",
       success: function(data) {
         var dataServer = data.query.pages;
-
+        console.log(dataServer);
         $.each(dataServer, function(k, v) {
-          var $p = $("<p>");
-          var $title = $("<button class='btn btn-danger'>").text(v.title);
-          var $link = $("<a href='https://en.wikipedia.org/?curid='></a>").html($title);
-
-          $link.attr('href', $link.attr('href') + v.pageid);
-
+          var $title = $("<div>").text(v.title);
+          var $link = $("<object data='https://en.wikipedia.org/?curid='/>").html($title);
+          $link.attr('data', $link.attr('data') + v.pageid);
           $(".results").hide();
-          $(".results").append($p, $link).fadeIn();
-
-
+          $(".results").append($link).fadeIn();
         });
-
       }
     });
   });
+  
 });
