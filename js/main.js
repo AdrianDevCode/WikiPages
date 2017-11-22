@@ -1,7 +1,8 @@
 $(document).ready(function() {
-//$("#srch").focus();
-  var api = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=&generator=search&&gsrlimit=5&gsrsearch=';
+$("#wikiSearch").focus();
+  var api = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=&generator=search&&gsrlimit=7&gsrsearch=';
   var cb = '&callback=?';
+  var dataServer;
 
   $("#randomButton").click(function(){
     $(".results").html('<object data="https://en.wikipedia.org/wiki/Special:Random"/>');
@@ -9,7 +10,7 @@ $(document).ready(function() {
 
 
   $("form").submit(function(e) {
-    e.preventDefault();
+   e.preventDefault();
     $(".results").empty();
     var input = $("#wikiSearch").val();
 
@@ -22,17 +23,15 @@ $(document).ready(function() {
       },
       contentType: "application/json; charset=utf-8",
       success: function(data) {
-        var dataServer = data.query.pages;
-        console.log(dataServer);
+         dataServer = data.query.pages;
         $.each(dataServer, function(k, v) {
           var $title = $("<div>").text(v.title);
           var $link = $("<object data='https://en.wikipedia.org/?curid='/>").html($title);
           $link.attr('data', $link.attr('data') + v.pageid);
-          $(".results").hide();
-          $(".results").append($link).fadeIn();
+          $(".results").append($link).fadeIn(1000);
         });
       }
     });
   });
 
-});
+            });
