@@ -1,6 +1,6 @@
 $(document).ready(function() {
 //$("#srch").focus();
-  var api = 'http://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=&generator=search&&gsrlimit=5&gsrsearch=';
+  var api = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=&generator=search&&gsrlimit=5&gsrsearch=';
   var cb = '&callback=?';
 
   $("#randomButton").click(function(){
@@ -34,5 +34,5 @@ $(document).ready(function() {
       }
     });
   });
-  
+
 });
