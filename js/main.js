@@ -27,6 +27,7 @@ $(document).ready(function() {
         $.each(dataServer, function(k, v) {
           var $title = $("<div>").text(v.title);
             if(windowWidth < 700 ){
+
               var $link = $("<object data='https://en.m.wikipedia.org/?curid='/>").html($title);
             }
             else {
